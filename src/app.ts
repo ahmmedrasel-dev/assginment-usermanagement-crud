@@ -1,14 +1,17 @@
-import express, { Application, Request, Response } from "express";
-import cors from "cors";
+import express, { Application, Request, Response } from 'express';
+import cors from 'cors';
+import { userRoutes } from './app/modules/users/user.routes';
 const app: Application = express();
-const port = 3000;
 
 // Parser
 app.use(cors());
 app.use(express.json());
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Hello World!");
+// All Routes
+app.use('api', userRoutes);
+
+app.get('/', (req: Request, res: Response) => {
+  res.send('Welcome to User Management Application!');
 });
 
 export default app;
