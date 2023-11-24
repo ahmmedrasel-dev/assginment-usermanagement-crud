@@ -56,7 +56,6 @@ const updateUserInfo =  async(req: Request, res: Response) => {
     const { user: userData } = req.body;
     const id = Number(req.params.userId);
     const result = await userService.updateUserInfo(id, userData);
-    console.log(result);
     res.status(200).json({
       success: true,
       message: "User Updated Successfully!",
@@ -74,9 +73,32 @@ const updateUserInfo =  async(req: Request, res: Response) => {
   }
 }
 
+
+const deleteUser = async (req: Request, res: Response) => {
+  try {
+    const id = Number(req.params.userId);
+    await userService.deleteUser(id)
+    res.status(200).json({
+      status: 'success',
+      message: 'User deleted successfully',
+      data: null
+    })
+  } catch (error: any) {
+    res.status(404).json({
+      success: false,
+      message: error.message,
+      error: {
+        code: 404,
+        description: "User Not Found!"
+      }
+    })
+  }
+}
+
 export const userController = {
   createUser,
   getAllUsers,
   getSingleUser,
-  updateUserInfo
+  updateUserInfo,
+  deleteUser
 };

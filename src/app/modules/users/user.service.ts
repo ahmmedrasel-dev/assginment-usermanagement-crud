@@ -32,11 +32,21 @@ const updateUserInfo = async (id:number, userData: TUser) =>{
     return updatedUser;
 }
 
+const deleteUser = async (id: number) => {
+    const user = new User;
+    const existUser = await user.isUserExists(id);
+    if (!existUser) {
+        throw new Error ('User Not Found');
+    }
+    const result = await User.findOneAndDelete({userId: id})
+    return result
+  }
 
 
 export const userService = {
   userCreateToDb,
   getUsersFromDb,
   getSingleUserFromDb,
-  updateUserInfo
+  updateUserInfo,
+  deleteUser
 };
