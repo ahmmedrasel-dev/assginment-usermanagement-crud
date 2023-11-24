@@ -22,6 +22,6 @@
     "no-undef": "error"
   },
   "globals": {
-    "proceaa": "readonly"
+    "process": "readonly"
   }
 }

@@ -1,11 +1,30 @@
-import UserModel from '../users.model';
-import { User } from './users.interface';
+import User from '../users.model';
+import { TUser } from './users.interface';
 
-const userCreateToDb = (user: User) => {
-  const result = UserModel.create(user);
+const userCreateToDb = (user: TUser) => {
+  const result = User.create(user);
   return result;
 };
 
+const getUsersFromDb = () => {
+  const result = User.find();
+  return result;
+};
+
+const getSingleUserFromDb = async (id: number) => {
+    const user = new User;
+    const isUserExists = await user.isUserExists(id);
+
+    if (!isUserExists) {
+        throw new Error ('User Not Found');
+      }
+    return isUserExists
+}
+
+
+
 export const userService = {
   userCreateToDb,
+  getUsersFromDb,
+  getSingleUserFromDb
 };
