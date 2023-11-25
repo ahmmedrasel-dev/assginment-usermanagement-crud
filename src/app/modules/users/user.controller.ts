@@ -100,7 +100,7 @@ const createOder = async (req: Request, res: Response) => {
     await userService.createOderToDb(id, orders);
     res.status(200).json({
       status: 'success',
-      message: 'User Oders successfully',
+      message: 'Oder created successfully!',
       data: null,
     });
   } catch (error: any) {
@@ -115,6 +115,26 @@ const createOder = async (req: Request, res: Response) => {
   }
 };
 
+const getSingleUserOders = async (req: Request, res: Response) => {
+  try {
+    const id = Number(req.params.userId);
+    const result = await userService.getSingleUserOders(id);
+    res.status(200).json({
+      status: 'success',
+      message: 'Oder fetched successfully!',
+      data: result,
+    });
+  } catch (error: any) {
+    res.status(404).json({
+      success: false,
+      message: error.message,
+      error: {
+        code: 404,
+        description: 'User Not Found!',
+      },
+    });
+  }
+};
 export const userController = {
   createUser,
   getAllUsers,
@@ -122,4 +142,5 @@ export const userController = {
   updateUserInfo,
   deleteUser,
   createOder,
+  getSingleUserOders,
 };

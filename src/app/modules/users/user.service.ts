@@ -53,6 +53,16 @@ const createOderToDb = async (id: number, order: TOrder) => {
   await user.save();
 };
 
+const getSingleUserOders = async (id: number) => {
+  const user = await User.findOne({ userId: id });
+  if (!user) {
+    throw new Error('User not found');
+  }
+
+  const userOrders = user.orders || [];
+  return { orders: userOrders };
+};
+
 export const userService = {
   userCreateToDb,
   getUsersFromDb,
@@ -60,4 +70,5 @@ export const userService = {
   updateUserInfo,
   deleteUser,
   createOderToDb,
+  getSingleUserOders,
 };
