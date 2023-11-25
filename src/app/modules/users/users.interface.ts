@@ -1,4 +1,10 @@
-import { Model } from "mongoose";
+import { Model } from 'mongoose';
+
+export type TOrder = {
+  productName: string;
+  price: number;
+  quantity: number;
+};
 
 export type TUser = {
   userId: number;
@@ -17,11 +23,11 @@ export type TUser = {
     city: string;
     country: string;
   };
+  orders?: TOrder[];
 };
 
-
 export type TUserMethod = {
-  isUserExists(userId: number): Promise<TUser | null>
-}
+  isUserExists(userId: number): Promise<TUser | null>;
+};
 
 export type TUserModel = Model<TUser, Record<number, never>, TUserMethod>;

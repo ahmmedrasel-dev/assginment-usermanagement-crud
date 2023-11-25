@@ -28,77 +28,98 @@ const getAllUsers = async (req: Request, res: Response) => {
   }
 };
 
-
-const getSingleUser = async(req: Request, res: Response) => {
-  try{
+const getSingleUser = async (req: Request, res: Response) => {
+  try {
     const userId = Number(req.params.userId);
     const result = await userService.getSingleUserFromDb(userId);
     res.status(200).json({
       success: true,
-      message: "User Fatched Successfully!",
-      data: result
-    })
-   
-  }catch(error: any){
-    res.status(404).json({
-      success: false,
-      message: error.message,
-      error: {
-        code: 404,
-        description: "User Not Found!"
-      }
-    })
-  }
-}
-
-const updateUserInfo =  async(req: Request, res: Response) => {
-  try{
-    const { user: userData } = req.body;
-    const id = Number(req.params.userId);
-    const result = await userService.updateUserInfo(id, userData);
-    res.status(200).json({
-      success: true,
-      message: "User Updated Successfully!",
-      data: result
-    })
-  }catch(error: any){
-    res.status(404).json({
-      success: false,
-      message: error.message,
-      error: {
-        code: 404,
-        description: "User Not Found!"
-      }
-    })
-  }
-}
-
-
-const deleteUser = async (req: Request, res: Response) => {
-  try {
-    const id = Number(req.params.userId);
-    await userService.deleteUser(id)
-    res.status(200).json({
-      status: 'success',
-      message: 'User deleted successfully',
-      data: null
-    })
+      message: 'User Fatched Successfully!',
+      data: result,
+    });
   } catch (error: any) {
     res.status(404).json({
       success: false,
       message: error.message,
       error: {
         code: 404,
-        description: "User Not Found!"
-      }
-    })
+        description: 'User Not Found!',
+      },
+    });
   }
-}
+};
+
+const updateUserInfo = async (req: Request, res: Response) => {
+  try {
+    const { user: userData } = req.body;
+    const id = Number(req.params.userId);
+    const result = await userService.updateUserInfo(id, userData);
+    res.status(200).json({
+      success: true,
+      message: 'User Updated Successfully!',
+      data: result,
+    });
+  } catch (error: any) {
+    res.status(404).json({
+      success: false,
+      message: error.message,
+      error: {
+        code: 404,
+        description: 'User Not Found!',
+      },
+    });
+  }
+};
+
+const deleteUser = async (req: Request, res: Response) => {
+  try {
+    const id = Number(req.params.userId);
+    await userService.deleteUser(id);
+    res.status(200).json({
+      status: 'success',
+      message: 'User deleted successfully',
+      data: null,
+    });
+  } catch (error: any) {
+    res.status(404).json({
+      success: false,
+      message: error.message,
+      error: {
+        code: 404,
+        description: 'User Not Found!',
+      },
+    });
+  }
+};
+
+const createOder = async (req: Request, res: Response) => {
+  try {
+    const id = Number(req.params.userId);
+    const { productName, price, quantity } = req.body;
+    const orders = { productName, price, quantity };
+    await userService.createOderToDb(id, orders);
+    res.status(200).json({
+      status: 'success',
+      message: 'User Oders successfully',
+      data: null,
+    });
+  } catch (error: any) {
+    res.status(404).json({
+      success: false,
+      message: error.message,
+      error: {
+        code: 404,
+        description: 'User Not Found!',
+      },
+    });
+  }
+};
 
 export const userController = {
   createUser,
   getAllUsers,
   getSingleUser,
   updateUserInfo,
-  deleteUser
+  deleteUser,
+  createOder,
 };
