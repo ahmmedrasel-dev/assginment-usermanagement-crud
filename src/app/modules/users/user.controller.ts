@@ -135,6 +135,29 @@ const getSingleUserOders = async (req: Request, res: Response) => {
     });
   }
 };
+
+const calculateTotalPrice = async (req: Request, res: Response) => {
+  try {
+    const id = Number(req.params.userId);
+    const result = await userService.calculateTotalPrice(id);
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Total price calculated successfully!',
+      data: result,
+    });
+  } catch (error: any) {
+    res.status(404).json({
+      success: false,
+      message: error.message,
+      error: {
+        code: 404,
+        description: 'User Not Found!',
+      },
+    });
+  }
+};
+
 export const userController = {
   createUser,
   getAllUsers,
@@ -143,4 +166,5 @@ export const userController = {
   deleteUser,
   createOder,
   getSingleUserOders,
+  calculateTotalPrice,
 };

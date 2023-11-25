@@ -28,6 +28,7 @@ export type TUser = {
 
 export type TUserMethod = {
   isUserExists(userId: number): Promise<TUser | null>;
+  totalOderPirce(userId: number): Promise<number>;
 };
 
 export type TUserModel = Model<TUser, Record<number, never>, TUserMethod>;

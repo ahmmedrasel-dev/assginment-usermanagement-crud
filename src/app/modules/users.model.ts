@@ -54,5 +54,17 @@ userSchema.methods.isUserExists = async function (id: number) {
   return existingUser;
 };
 
+userSchema.methods.totalOderPirce = async function (id: number) {
+  const user = await User.findOne({ userId: id });
+  const orders = user?.orders || [];
+
+  const total = orders.reduce(
+    (total, order) => total + order.price * order.quantity,
+    0,
+  );
+
+  return total;
+};
+
 const User = model<TUser, TUserModel>('User', userSchema);
 export default User;

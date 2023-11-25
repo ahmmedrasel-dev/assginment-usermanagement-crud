@@ -63,6 +63,12 @@ const getSingleUserOders = async (id: number) => {
   return { orders: userOrders };
 };
 
+const calculateTotalPrice = async (id: number) => {
+  const user = new User();
+  const totalPrice = await user.totalOderPirce(id);
+  return { totalPrice: totalPrice };
+};
+
 export const userService = {
   userCreateToDb,
   getUsersFromDb,
@@ -71,4 +77,5 @@ export const userService = {
   deleteUser,
   createOderToDb,
   getSingleUserOders,
+  calculateTotalPrice,
 };
